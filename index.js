@@ -1,8 +1,7 @@
-
 const express = require('express')
 const config = require('./config.json')
 const api = require('./api')
-const auth = require('./auth')
+// const auth = require('./auth')
 const session = require('express-session')
 const MongoStore = require('connect-mongo')(session)
 const bodyParser = require('body-parser')
@@ -21,8 +20,8 @@ app.use(session(Object.assign({
   maxAge: 1000 * 60 * 60 * 24 * 365 // 1 year
 }, config.session)))
 
-app.use(auth.sessionSupport())
-app.use(auth.acceptToken({successRedirect: '/'}))
+// app.use(auth.sessionSupport())
+// app.use(auth.acceptToken({successRedirect: '/'}))
 
 app.use('/api', api)
 
