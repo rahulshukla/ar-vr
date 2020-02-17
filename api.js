@@ -1,7 +1,6 @@
-
 const express = require('express')
 const cors = require('cors')
-const auth = require('./auth')
+// const auth = require('./auth')
 const db = require('./db')
 const buildStory = require('./client/shared/story-builder')
 const upload = require('./uploader')
@@ -53,23 +52,23 @@ app.post('/stories', (req, res, next) => {
 app.post('/assets', upload.asset.single('file'),
 (req, res) => res.json({ url: req.file.location }))
 
-app.post('/login', auth.requestToken(
-  (email, delivery, callback, req) =>
-     users.findOne({ email })
-      .then(user => {
-        if (user) {
-          callback(null, user._id)
-        } else {
-          users.insert({ email })
-            .then(user => callback(null, user._id))
-        }
-      })
-      .catch(err => callback(err))),
-  (req, res) => res.send('ok'))
+// app.post('/login', auth.requestToken(
+//   (email, delivery, callback, req) =>
+//      users.findOne({ email })
+//       .then(user => {
+//         if (user) {
+//           callback(null, user._id)
+//         } else {
+//           users.insert({ email })
+//             .then(user => callback(null, user._id))
+//         }
+//       })
+//       .catch(err => callback(err))),
+  // (req, res) => res.send('ok'))
 
 app.get('/assets/search', cors(), searchResources)
 
-app.use(auth.restricted())
+// app.use(auth.restricted())
 
 app.post('/logout', (req, res) =>
 req.session.destroy(() => res.send('ok')))
